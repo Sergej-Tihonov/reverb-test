@@ -9,6 +9,7 @@ Route::get('/', function () {
 
 Route::get('/broadcast', function () {
     broadcast(new \App\Events\Example(\App\Models\User::firstOrFail(), \App\Models\Message::firstOrFail()));
+    broadcast(new \App\Events\Chat\ExampleTwo());
     return 'example broadcast send';
 });
 

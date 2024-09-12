@@ -12,7 +12,10 @@
                     class="p-6 text-gray-900"
                     x-init="
                         Echo.channel('chat')
-                            .listen('Example', (event) => {
+                            .listen('.App\\Events\\Example', (event) => {
+                                console.log(event)
+                            })
+                            .listen('ExampleTwo', (event) => {
                                 console.log(event)
                             })
                     "
