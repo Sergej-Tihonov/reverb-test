@@ -9,6 +9,7 @@ Route::get('/', function () {
 
 Route::get('/broadcast', function () {
     broadcast(new \App\Events\Example());
+    return 'example broadcast send';
 });
 
 Route::get('/dashboard', function () {
