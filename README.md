@@ -14,3 +14,8 @@ Make event:
 ```
 php artisan make:event Example
 ```
+
+Make model:
+```
+php artisan make:model Message -m
+```
