@@ -9,7 +9,10 @@ Route::get('/', function () {
 });
 
 Route::get('/broadcast', function () {
+    sleep(2);
     broadcast(new \App\Events\OrderDispatched(\App\Models\User::firstOrFail(), Order::firstOrFail()));
+    sleep(3);
+    broadcast(new \App\Events\OrderDelivered(\App\Models\User::firstOrFail(), Order::firstOrFail()));
 
     return 'example broadcast send';
 });

@@ -12,6 +12,7 @@
                     class="p-6 text-gray-900"
                     x-data="{
                         dispatched: false,
+                        delivered: false,
                         order: null
                     }"
                     x-init="
@@ -19,13 +20,19 @@
                             .listen('OrderDispatched', (event) => {
                                 dispatched = true
                                 order = event.order
-                                console.log(event)
+                            })
+                            .listen('OrderDelivered', (event) => {
+                                delivered = true
+                                order = event.order
                             })
                     "
                 >
                     {{ __("You're logged in!") }}
                     <template x-if="dispatched">
                         <p>Order (# <span x-text="order.id"></span>) has bin dispatched!</p>
+                    </template>
+                    <template x-if="delivered">
+                        <p>Order (# <span x-text="order.id"></span>) has bin delivered!</p>
                     </template>
                 </div>
             </div>
