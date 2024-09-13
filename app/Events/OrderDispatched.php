@@ -20,7 +20,7 @@ class OrderDispatched implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct(private User $user, private Order $order)
+    public function __construct(private Order $order)
     {
         //
     }
@@ -28,10 +28,6 @@ class OrderDispatched implements ShouldBroadcastNow
     public function broadcastWith(): array
     {
         return [
-            'user' => [
-                'id' => $this->user->id,
-                'name' => $this->user->name,
-            ],
             'order' => [
                 'id' => $this->order->id,
             ]
@@ -46,7 +42,8 @@ class OrderDispatched implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('users.' . $this->user->id),
+            new PrivateChannel('users.' . $this->order->user_id),
+            new PrivateChannel('orders.' . $this->order->id),
         ];
     }
 }

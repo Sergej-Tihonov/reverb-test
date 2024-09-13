@@ -8,11 +8,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/orders/{order}', function (Order $order) {
+    return view('order', [
+        'order' => $order,
+    ]);
+});
+
 Route::get('/broadcast', function () {
     sleep(2);
-    broadcast(new \App\Events\OrderDispatched(\App\Models\User::firstOrFail(), Order::firstOrFail()));
+    broadcast(new \App\Events\OrderDispatched(Order::firstOrFail()));
     sleep(3);
-    broadcast(new \App\Events\OrderDelivered(\App\Models\User::firstOrFail(), Order::firstOrFail()));
+    broadcast(new \App\Events\OrderDelivered(Order::firstOrFail()));
 
     return 'example broadcast send';
 });
