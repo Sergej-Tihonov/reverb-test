@@ -8,6 +8,10 @@ Broadcast::channel('users.{id}', function (User $user, int $id) {
     return $user->id === $id;
 });
 
+Broadcast::channel('app', function (User $user) {
+    return true;
+});
+
 Broadcast::channel('room.{roomId}', function (User $user, int $roomId) {
     return $user->only(['id', 'name']);
 });

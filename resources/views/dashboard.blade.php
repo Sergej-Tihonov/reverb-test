@@ -11,29 +11,20 @@
                 <div
                     class="p-6 text-gray-900"
                     x-data="{
-                        dispatched: false,
-                        delivered: false,
-                        order: null
                     }"
                     x-init="
-                        Echo.private('users.{{ auth()->id() }}')
-                            .listen('OrderDispatched', (event) => {
-                                dispatched = true
-                                order = event.order
-                            })
-                            .listen('OrderDelivered', (event) => {
-                                delivered = true
-                                order = event.order
-                            })
+                        const channel = Echo.private('app')
+                        channel.listenForWhisper('typing', (event) => {
+                            console.log(event)
+                        })
+                        setTimeout(() => {
+                            channel.whisper('typing', {
+                                id: 1
+                            });
+                        }, 2000)
                     "
                 >
                     {{ __("You're logged in!") }}
-                    <template x-if="dispatched">
-                        <p>Order (# <span x-text="order.id"></span>) has bin dispatched!</p>
-                    </template>
-                    <template x-if="delivered">
-                        <p>Order (# <span x-text="order.id"></span>) has bin delivered!</p>
-                    </template>
                 </div>
             </div>
         </div>
