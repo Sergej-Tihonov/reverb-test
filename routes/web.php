@@ -2,11 +2,18 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Models\Order;
+use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/rooms/{room}', function (Room $room) {
+    return view('room', [
+        'room' => $room,
+    ]);
+})->middleware(['auth', 'verified'])->name('room');
 
 Route::get('/orders/{order}', function (Order $order) {
     return view('order', [
