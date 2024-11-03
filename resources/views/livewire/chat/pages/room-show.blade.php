@@ -21,7 +21,7 @@
         }"
         x-on:keydown.shift="shift = true"
         x-on:keyup.shift="shift = false"
-        x-on:keydown.enter="if (!shift && !$event.target.valu) { $event.preventDefault() }"
+        x-on:keydown.enter="if (!shift || !$event.target.value) { $event.preventDefault() }"
         x-on:keyup.enter.prevent="if (!shift && $event.target.value) { $wire.submit() }"
         class=""
       >

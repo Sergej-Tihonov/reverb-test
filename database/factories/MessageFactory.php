@@ -2,26 +2,21 @@
 
 namespace Database\Factories;
 
-use App\Models\Room;
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Room>
+ * @extends Factory<Message>
  */
-class RoomFactory extends Factory
+class MessageFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
-        $name = fake()->unique()->word();
-
         return [
-            'name' => $name,
-            'slug' => $name,
+            'body' => $this->faker->realText(),
         ];
     }
 }
