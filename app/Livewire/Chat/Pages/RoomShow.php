@@ -19,12 +19,13 @@ class RoomShow extends Component
     {
         $this->validate();
 
-        Message::create([
+        $message = Message::create([
             'user_id' => auth()->id(),
             'room_id' => $this->room->id,
             'body' => $this->body,
         ]);
         $this->reset('body');
+        $this->dispatch('message.created', $message->id);
     }
 
     #[Layout('layouts.app')]
