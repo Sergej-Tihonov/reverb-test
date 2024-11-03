@@ -20,6 +20,7 @@ Broadcast::channel('orders.{ordersId}', function (User $user, int $ordersId) {
     if ($user->id !== Order::find($ordersId)->user_id) {
         return false;
     }
+
     return true;
 });
 
