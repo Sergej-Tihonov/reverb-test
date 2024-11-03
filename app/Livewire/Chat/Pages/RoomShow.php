@@ -9,6 +9,11 @@ use Livewire\Component;
 class RoomShow extends Component
 {
     public Room $room;
+    public string $body;
+
+    public function submit() {
+        ray($this->body);
+    }
 
     #[Layout('layouts.app')]
     public function render()
