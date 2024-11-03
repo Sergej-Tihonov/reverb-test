@@ -12,9 +12,7 @@
       </div>
     </div>
     <div class="col-span-9 flex flex-col gap-6 overflow-hidden bg-white p-6 shadow-sm sm:rounded-lg">
-      <div class="">
-        Messages
-      </div>
+      <livewire:chat.messages :room="$room" />
       <form
         x-data="{
           shift: false

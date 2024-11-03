@@ -11,16 +11,19 @@ use Livewire\Component;
 class RoomShow extends Component
 {
     public Room $room;
+
     #[Rule('required')]
     public string $body = '';
 
-    public function submit() {
+    public function submit(): void
+    {
         $this->validate();
 
-        $message = Message::make($this->only('body'));
-        $message->room()->associate($this->room);
-        $message->user()->associate(auth()->user());
-        $message->save();
+        Message::create([
+            'user_id' => auth()->id(),
+            'room_id' => $this->room->id,
+            'body' => $this->body,
+        ]);
         $this->reset('body');
     }
 
