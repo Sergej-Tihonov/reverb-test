@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Chat\Pages\RoomShow;
 use App\Models\Order;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/chat/{room:slug}', RoomShow::class)
+    ->name('chat.show')
+    ->middleware(['auth']);
 
 Route::get('/rooms/{room}', function (Room $room) {
     return view('room', [
