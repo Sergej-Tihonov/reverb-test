@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Chat\Pages;
 
+use App\Events\MessageCreated;
 use App\Models\Message;
 use App\Models\Room;
 use Livewire\Attributes\Layout;
@@ -26,6 +27,7 @@ class RoomShow extends Component
         ]);
         $this->reset('body');
         $this->dispatch('message.created', $message->id);
+        broadcast(new MessageCreated($message))->toOthers();
     }
 
     #[Layout('layouts.app')]

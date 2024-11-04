@@ -25,3 +25,7 @@ Broadcast::channel('orders.{ordersId}', function (User $user, int $ordersId) {
 });
 
 Broadcast::channel('chat', function ($user) {});
+
+Broadcast::channel('chat.room.{roomId}', function (User $user, int $roomId) {
+    return true;
+});
