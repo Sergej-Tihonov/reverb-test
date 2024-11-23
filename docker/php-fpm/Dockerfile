@@ -16,7 +16,7 @@ RUN apt-get update -yqq \
 
 # Install laravel necessary packages
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions bcmath redis xdebug gd exif zip sockets pcntl
+RUN install-php-extensions bcmath redis xdebug gd exif zip sockets pcntl intl
 
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
