@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Enums\RegionEnum;
+use Filament\Forms;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Filament\Forms;
 
 /**
  * @mixin IdeHelperVenue

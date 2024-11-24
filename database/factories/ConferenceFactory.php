@@ -3,10 +3,9 @@
 namespace Database\Factories;
 
 use App\Enums\RegionEnum;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Conference;
 use App\Models\Venue;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ConferenceFactory extends Factory
 {
