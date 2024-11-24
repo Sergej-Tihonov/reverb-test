@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RegionEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +31,7 @@ class Conference extends Model
         'end_date' => 'datetime',
         'venue_id' => 'integer',
         'is_published' => 'boolean',
+        'region' => RegionEnum::class,
     ];
 
     public function venue(): BelongsTo
