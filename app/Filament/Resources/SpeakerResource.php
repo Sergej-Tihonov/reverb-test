@@ -25,6 +25,23 @@ class SpeakerResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required(),
+                Forms\Components\CheckboxList::make('qualifications')
+                    ->columnSpanFull()
+                    ->columns(3)
+                    ->searchable()
+                    ->bulkToggleable()
+                    ->options([
+                        'business-leader' => 'Business Leader',
+                        'charisma' => 'Charismatic Speaker',
+                        'first-time' => 'First Time Speaker',
+                        'hometown-hero' => 'Hometown Hero',
+                        'humanitarian' => 'Works in Humanitarian Field',
+                        'laracasts-contributor' => 'Laracasts Contributor',
+                        'twitter-influencer' => 'Twitter Influencer',
+                        'youtube-influencer' => 'Youtube Influencer',
+                        'open-source' => 'Open Source',
+                        'unique-perspective' => 'Unique Perspective',
+                    ]),
                 Forms\Components\Textarea::make('bio')
                     ->required()
                     ->columnSpanFull(),
