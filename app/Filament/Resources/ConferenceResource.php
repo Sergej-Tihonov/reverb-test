@@ -24,48 +24,63 @@ class ConferenceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Conference')
-                    ->hint('Here is the hint!')
-                    ->hintIcon('heroicon-o-academic-cap')
-                    ->prefixIcon('heroicon-o-globe-alt')
-                    ->helperText('The name of the conference.')
-                    ->rules('max:60')
-                    ->required(),
-                Forms\Components\TextInput::make('website')
-                    ->url()
-                    ->prefix('https://')
-                    ->suffix('.com'),
-                Forms\Components\RichEditor::make('description')
-                    ->disableToolbarButtons(['attachFiles', 'codeBlock', 'link'])
-                    ->required(),
-                Forms\Components\DatePicker::make('start_date')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('end_date')
-                    ->native(false)
-                    ->required(),
-                Forms\Components\Toggle::make('is_published')
-                    ->default(false),
-                Forms\Components\Select::make('status')
-                    ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
-                        'archived' => 'Archived',
-                    ])
-                    ->required(),
-                Forms\Components\Select::make('region')
-                    ->live()
-                    ->enum(RegionEnum::class)
-                    ->options(RegionEnum::class)
-                    ->required(),
-                Forms\Components\Select::make('venue_id')
-                    ->searchable()
-                    ->preload()
-                    ->createOptionForm(Venue::getForm())
-                    ->editOptionForm(Venue::getForm())
-                    ->relationship('venue', 'name', modifyQueryUsing: function (Builder $query, Forms\Get $get) {
-                        return $query->where('region', $get('region'));
-                    }),
+                Forms\Components\Section::make('Conference Details')
+                    ->columns(['md' => 2, 'lg' => 3])
+                    ->description('Main information about the conference')
+                    ->icon('heroicon-o-bookmark')
+                    ->collapsible()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Conference')
+                            ->hint('Here is the hint!')
+                            ->hintIcon('heroicon-o-academic-cap')
+                            ->prefixIcon('heroicon-o-globe-alt')
+                            ->helperText('The name of the conference.')
+                            ->rules('max:60')
+                            ->required(),
+                        Forms\Components\TextInput::make('website')
+                            ->url()
+                            ->prefix('https://')
+                            ->suffix('.com'),
+                        Forms\Components\RichEditor::make('description')
+                            ->columnSpanFull()
+                            ->disableToolbarButtons(['attachFiles', 'codeBlock', 'link'])
+                            ->required(),
+                        Forms\Components\DatePicker::make('start_date')
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('end_date')
+                            ->native(false)
+                            ->required(),
+                    ]),
+                Forms\Components\Section::make('Location')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\Select::make('region')
+                            ->live()
+                            ->enum(RegionEnum::class)
+                            ->options(RegionEnum::class)
+                            ->required(),
+                        Forms\Components\Select::make('venue_id')
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm(Venue::getForm())
+                            ->editOptionForm(Venue::getForm())
+                            ->relationship('venue', 'name', modifyQueryUsing: function (Builder $query, Forms\Get $get) {
+                                return $query->where('region', $get('region'));
+                            }),
+                    ]),
+                Forms\Components\Fieldset::make('Status')
+                    ->schema([
+                        Forms\Components\Toggle::make('is_published')
+                            ->default(false),
+                        Forms\Components\Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'published' => 'Published',
+                                'archived' => 'Archived',
+                            ])
+                            ->required(),
+                    ]),
                 Forms\Components\CheckboxList::make('speakers')
                     ->relationship('speakers', 'name')
                     ->options(Speaker::pluck('name', 'id'))
