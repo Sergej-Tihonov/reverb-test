@@ -23,9 +23,11 @@ class ConferenceFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'website' => $this->faker->url(),
             'description' => $this->faker->text(),
             'start_date' => $this->faker->dateTime(),
             'end_date' => $this->faker->dateTime(),
+            'is_published' => $this->faker->boolean(),
             'status' => $this->faker->word(),
             'region' => $this->faker->word(),
             'venue_id' => Venue::factory(),

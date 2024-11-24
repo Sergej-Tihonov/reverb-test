@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('venue_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name');
+            $table->string('website')->nullable();
             $table->string('description');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->boolean('is_published');
             $table->string('status');
             $table->string('region');
             $table->timestamps();

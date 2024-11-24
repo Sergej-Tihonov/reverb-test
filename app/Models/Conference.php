@@ -29,6 +29,7 @@ class Conference extends Model
         'start_date' => 'datetime',
         'end_date' => 'datetime',
         'venue_id' => 'integer',
+        'is_published' => 'boolean',
     ];
 
     public function venue(): BelongsTo

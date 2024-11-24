@@ -26,14 +26,33 @@ class ConferenceResource extends Resource
                 Forms\Components\Select::make('venue_id')
                     ->relationship('venue', 'name'),
                 Forms\Components\TextInput::make('name')
+                    ->label('Conference')
+                    ->hint('Here is the hint!')
+                    ->hintIcon('heroicon-o-academic-cap')
+                    ->prefixIcon('heroicon-o-globe-alt')
+                    ->helperText('The name of the conference.')
+                    ->rules('max:60')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\TextInput::make('website')
+                    ->url()
+                    ->prefix('https://')
+                    ->suffix('.com'),
+                Forms\Components\RichEditor::make('description')
+                    ->disableToolbarButtons(['attachFiles', 'codeBlock', 'link'])
                     ->required(),
-                Forms\Components\DateTimePicker::make('start_date')
+                Forms\Components\DatePicker::make('start_date')
                     ->required(),
                 Forms\Components\DateTimePicker::make('end_date')
+                    ->native(false)
                     ->required(),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Toggle::make('is_published')
+                    ->default(false),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'archived' => 'Archived',
+                    ])
                     ->required(),
                 Forms\Components\TextInput::make('region')
                     ->required(),
