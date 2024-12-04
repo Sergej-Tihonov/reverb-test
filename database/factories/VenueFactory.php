@@ -25,7 +25,7 @@ class VenueFactory extends Factory
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
             'postal_code' => $this->faker->postcode(),
-            'region' => $this->faker->randomElement(RegionEnum::cases()),
+            'region' => $this->faker->randomElement(RegionEnum::class),
         ];
     }
 }

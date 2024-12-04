@@ -85,6 +85,24 @@ class ConferenceResource extends Resource
                     ->relationship('speakers', 'name')
                     ->options(Speaker::pluck('name', 'id'))
                     ->required(),
+                Forms\Components\Actions::make([
+                    Forms\Components\Actions\Action::make('star')
+                    ->label('Fill with Factory')
+                    ->icon('heroicon-o-star')
+                    ->action(function (Pages\CreateConference $livewire) {
+                        $data = Conference::factory()->make()->toArray();
+                        $livewire->form->fill($data);
+                    })
+                    ->visible(function (string $operation) {
+                        if ($operation !== 'create') {
+                            return false;
+                        }
+                        if (! app()->environment('local')) {
+                            return false;
+                        }
+                        return true;
+                    }),
+                ]),
             ]);
     }
 

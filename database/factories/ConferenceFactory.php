@@ -28,9 +28,8 @@ class ConferenceFactory extends Factory
             'start_date' => $this->faker->dateTime(),
             'end_date' => $this->faker->dateTime(),
             'is_published' => $this->faker->boolean(),
-            'status' => $this->faker->word(),
-            'region' => $this->faker->randomElement(RegionEnum::cases()),
-            'venue_id' => Venue::factory(),
+            'status' => $this->faker->randomElement(['draft', 'published', 'archived']),
+            'region' => $this->faker->randomElement(RegionEnum::class),
         ];
     }
 }
