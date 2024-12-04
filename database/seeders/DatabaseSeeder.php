@@ -6,6 +6,7 @@ use App\Models\Conference;
 use App\Models\Order;
 use App\Models\Room;
 use App\Models\Speaker;
+use App\Models\Talk;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Venue;
@@ -38,5 +39,6 @@ class DatabaseSeeder extends Seeder
         Conference::factory()->create();
         Venue::factory(200)->create();
         Speaker::factory(3)->create();
+        Talk::factory(10)->create();
     }
 }

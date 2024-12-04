@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\TalkLength;
+use App\Enums\TalkStatus;
 use App\Filament\Resources\TalkResource\Pages;
+use App\Models\Speaker;
 use App\Models\Talk;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -28,6 +31,8 @@ class TalkResource extends Resource
                 Forms\Components\Textarea::make('abstract')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\Checkbox::make('new_talk')
+                    ->default(true),
             ]);
     }
 
@@ -35,16 +40,41 @@ class TalkResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('speaker.name')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\ImageColumn::make('speaker.avatar')
+                    ->label('avatar')
+                    ->circular()
+                    ->defaultImageUrl(function (Talk $record) {
+                        return 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' . urlencode($record->speaker->name);
+                    }),
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                    ->searchable()
+                    ->description(fn (Talk $record): string => str($record->abstract)->limit(40)),
+                Tables\Columns\TextInputColumn::make('speaker.name')
+                    ->rules(['required', 'string', 'max:255'])
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('abstract')
+                    ->wrap(),
+                Tables\Columns\IconColumn::make('new_talk')->boolean(),
+                Tables\Columns\ToggleColumn::make('new_talk'),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->sortable()
+                    //->color(fn (Talk $record):string => $record->status->getColor()),
+                    ->color(function (TalkStatus $state) {
+                        return $state->getColor();
+                    }),
+                Tables\Columns\IconColumn::make('length')
+                    ->icon(function (TalkLength $state) {
+                        return match($state) {
+                            TalkLength::NORMAL => 'heroicon-o-megaphone',
+                            TalkLength::LIGHTNING => 'heroicon-o-bolt',
+                            TalkLength::KEYNOTE => 'heroicon-o-key',
+                        };
+                    })
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
