@@ -22,10 +22,15 @@ class SpeakerResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
+                Forms\Components\FileUpload::make('avatar')
+                    ->maxSize(1024 * 1024 * 10) // 10mb
+                    ->imageEditor()
+                    ->directory('speakers')
+                    ->avatar(),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required(),
-                Forms\Components\CheckboxList::make('qualifications')
+                /*Forms\Components\CheckboxList::make('qualifications')
                     ->columnSpanFull()
                     ->columns(3)
                     ->searchable()
@@ -41,12 +46,10 @@ class SpeakerResource extends Resource
                         'youtube-influencer' => 'Youtube Influencer',
                         'open-source' => 'Open Source',
                         'unique-perspective' => 'Unique Perspective',
-                    ]),
+                    ]),*/
                 Forms\Components\Textarea::make('bio')
-                    ->required()
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('twitter_handle')
-                    ->required(),
+                Forms\Components\TextInput::make('twitter_handle'),
             ]);
     }
 
