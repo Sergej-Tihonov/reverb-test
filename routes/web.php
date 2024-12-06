@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Chat\Pages\RoomShow;
+use App\Livewire\ConferenceSignUpPage;
 use App\Models\Order;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/conference-sign-up', ConferenceSignUpPage::class);
 
 Route::get('/', function () {
     return view('welcome');
