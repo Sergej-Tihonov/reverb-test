@@ -87,21 +87,22 @@ class ConferenceResource extends Resource
                     ->required(),
                 Forms\Components\Actions::make([
                     Forms\Components\Actions\Action::make('star')
-                    ->label('Fill with Factory')
-                    ->icon('heroicon-o-star')
-                    ->action(function (Pages\CreateConference $livewire) {
-                        $data = Conference::factory()->make()->toArray();
-                        $livewire->form->fill($data);
-                    })
-                    ->visible(function (string $operation) {
-                        if ($operation !== 'create') {
-                            return false;
-                        }
-                        if (! app()->environment('local')) {
-                            return false;
-                        }
-                        return true;
-                    }),
+                        ->label('Fill with Factory')
+                        ->icon('heroicon-o-star')
+                        ->action(function (Pages\CreateConference $livewire) {
+                            $data = Conference::factory()->make()->toArray();
+                            $livewire->form->fill($data);
+                        })
+                        ->visible(function (string $operation) {
+                            if ($operation !== 'create') {
+                                return false;
+                            }
+                            if (! app()->environment('local')) {
+                                return false;
+                            }
+
+                            return true;
+                        }),
                 ]),
             ]);
     }
