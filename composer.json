@@ -8,6 +8,7 @@
         "php": "^8.3",
         "ext-intl": "*",
         "filament/filament": "^3.2.124",
+        "flowframe/laravel-trend": "^0.3.0",
         "laravel/framework": "^11.33.2",
         "laravel/reverb": "^1.4.3",
         "laravel/tinker": "^2.10",

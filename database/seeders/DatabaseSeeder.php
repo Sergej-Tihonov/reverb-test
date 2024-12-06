@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attendee;
 use App\Models\Conference;
 use App\Models\Order;
 use App\Models\Room;
@@ -36,9 +37,12 @@ class DatabaseSeeder extends Seeder
                 ['email' => 'user2@example.com'],
             )
             ->create();
-        Conference::factory()->create();
         Venue::factory(200)->create();
         Speaker::factory(3)->create();
         Talk::factory(10)->create();
+
+        $conference = Conference::factory()->create();
+        Attendee::factory(300)->forConference($conference)->create();
+
     }
 }
