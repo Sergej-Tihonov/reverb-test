@@ -8,10 +8,12 @@ use App\Filament\Resources\TalkResource\Pages;
 use App\Models\Talk;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class TalkResource extends Resource
 {
@@ -98,12 +100,62 @@ class TalkResource extends Resource
                     ->toggle(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->slideOver(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('approve')
+                        ->visible(function (Talk $record) {
+                            return $record->status !== TalkStatus::APPROVED;
+                        })
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->action(function (Talk $record) {
+                            $record->approve();
+                        })
+                        ->after(function () {
+                            Notification::make()
+                                ->success()
+                                ->duration(1000) // 1sec
+                                ->title('Talk is approved!')
+                                ->body('The speaker has been notified of this talk.')
+                                ->send();
+                        }),
+                    Tables\Actions\Action::make('reject')
+                        ->visible(function (Talk $record) {
+                            return $record->status !== TalkStatus::REJECTED;
+                        })
+                        ->icon('heroicon-o-no-symbol')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(function (Talk $record) {
+                            $record->reject();
+                        })
+                        ->after(function () {
+                            Notification::make()
+                                ->danger()
+                                ->duration(1000) // 1sec
+                                ->title('Talk is rejected!')
+                                ->body('The speaker has been notified of this talk.')
+                                ->send();
+                        }),
+                ])->label('more'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('approve')
+                        ->action(function (Collection $records) {
+                            $records->each->approve();
+                        }),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('export')
+                    ->tooltip('This will export all records visible in the table. Adjust filters to export a subset of records.')
+                    ->action(function ($livewire) {
+                        ray($livewire->getFilteredTableQuery()->count());
+                        ray('Exporting talks');
+                    }),
             ]);
     }
 
@@ -119,7 +171,7 @@ class TalkResource extends Resource
         return [
             'index' => Pages\ListTalks::route('/'),
             'create' => Pages\CreateTalk::route('/create'),
-            'edit' => Pages\EditTalk::route('/{record}/edit'),
+            // 'edit' => Pages\EditTalk::route('/{record}/edit'),
         ];
     }
 }
