@@ -13,7 +13,8 @@
         "laravel/reverb": "^1.4.3",
         "laravel/tinker": "^2.10",
         "livewire/livewire": "^3.5.12",
-        "livewire/volt": "^1.6.6"
+        "livewire/volt": "^1.6.6",
+        "pxlrbt/filament-environment-indicator": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.2.2",
